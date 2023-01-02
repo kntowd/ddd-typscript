@@ -36,3 +36,10 @@ export class User {
     return _.isEqual(this.id, other.id);
   }
 }
+
+// ドメインサービス
+export class UserService {
+  public exists(user: User) {
+    return true;
+  }
+}
