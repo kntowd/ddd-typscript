@@ -1,8 +1,10 @@
+import { UsersRepository } from "./users.repository";
+
 const _ = require("lodash");
 
 // 値オブジェクト
 export class UserId {
-  private value: string;
+  readonly value: string;
 
   constructor(value: string) {
     if (value == null) throw new Error("idを入力してください");
@@ -11,12 +13,23 @@ export class UserId {
   }
 }
 
+export class UserName {
+  readonly value: string;
+
+  constructor(value: string) {
+    if (value == null) throw new Error("名前を入力してください");
+    if (value.length < 3) throw new Error("名前は３文字以上にしてください");
+
+    this.value = value;
+  }
+}
+
 // エンティティ
 export class User {
-  private id: UserId;
-  private name: string;
+  readonly id: UserId;
+  name: UserName;
 
-  constructor(id: UserId, name: string) {
+  constructor(id: UserId, name: UserName) {
     if (id == null) throw new Error("idを入力してください");
     if (name == null) throw new Error("名前を入力してください");
 
@@ -25,9 +38,7 @@ export class User {
   }
 
   public changeUserName(name: string): void {
-    if (name == null) throw new Error("名前を入力してください");
-    if (name.length < 3) throw new Error("ユーザ名は三文字以上にしてください");
-    this.name = name;
+    this.name = new UserName(name);
   }
 
   public equals(other: User) {
@@ -38,8 +49,15 @@ export class User {
 }
 
 // ドメインサービス
-export class UserService {
+export class UsersService {
+  private usersRepository: UsersRepository;
+
+  constructor(usersRepository: UsersRepository) {
+    this.usersRepository = usersRepository;
+  }
+
   public exists(user: User) {
-    return true;
+    const foundUser = this.usersRepository.find(user.id);
+    return foundUser != null;
   }
 }
