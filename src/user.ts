@@ -1,6 +1,7 @@
 import { UsersRepository } from "./users.repository";
 
-const _ = require("lodash");
+import * as _ from "lodash";
+import { v4 as uuid } from "uuid";
 
 // 値オブジェクト
 export class UserId {
@@ -19,6 +20,7 @@ export class UserName {
   constructor(value: string) {
     if (value == null) throw new Error("名前を入力してください");
     if (value.length < 3) throw new Error("名前は３文字以上にしてください");
+    if (value.length > 20) throw new Error("名前は20文字以下にしてください");
 
     this.value = value;
   }
@@ -26,14 +28,16 @@ export class UserName {
 
 // エンティティ
 export class User {
-  readonly id: UserId;
   name: UserName;
+  id: UserId;
 
-  constructor(id: UserId, name: UserName) {
-    if (id == null) throw new Error("idを入力してください");
+  constructor(name: UserName, id?: UserId) {
     if (name == null) throw new Error("名前を入力してください");
-
-    this.id = id;
+    if (id == null) {
+      this.id = new UserId(uuid());
+    } else {
+      this.id = id;
+    }
     this.name = name;
   }
 
