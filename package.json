@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@types/lodash": "^4.14.191",
+    "@types/uuid": "^9.0.0",
     "lodash": "^4.17.21",
     "uuid": "^9.0.0"
   },
