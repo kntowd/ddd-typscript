@@ -15,8 +15,8 @@ export class UserApplicationService {
 
     if (user == null) return null;
 
-    // dtoに詰め替え
-    return new UserData(user.name.value, user.id.value);
+    // ドメインオブジェクトを公開しないようにDTOに詰め替え
+    return new UserData(user);
   }
 
   register(name: string) {
