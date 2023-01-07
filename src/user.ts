@@ -26,23 +26,39 @@ export class UserName {
   }
 }
 
+export class UserEmail {
+  readonly value: string;
+
+  constructor(value: string) {
+    this.value = value;
+  }
+}
+
 // エンティティ
 export class User {
   name: UserName;
   id: UserId;
+  email: UserEmail;
 
-  constructor(name: UserName, id?: UserId) {
+  constructor(name: UserName, id?: UserId, email?: UserEmail) {
     if (name == null) throw new Error("名前を入力してください");
     if (id == null) {
       this.id = new UserId(uuid());
     } else {
       this.id = id;
     }
+    if (email != null) {
+      this.email = email;
+    }
     this.name = name;
   }
 
-  public changeUserName(name: string): void {
-    this.name = new UserName(name);
+  public changeUserName(name: UserName): void {
+    this.name = name;
+  }
+
+  public changeUserEmail(email: UserEmail) {
+    this.email = email;
   }
 
   public equals(other: User) {
@@ -61,7 +77,7 @@ export class UsersService {
   }
 
   public exists(user: User) {
-    const foundUser = this.usersRepository.find(user.id);
-    return foundUser != null;
+    const duplicatedUser = this.usersRepository.find(user.name);
+    return duplicatedUser != null;
   }
 }
