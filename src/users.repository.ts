@@ -29,7 +29,7 @@ export class UsersRepository {
   }
 
   private toModel(from: UserDataModel): User {
-    return new User(new UserName(from.name), new UserId(from.id));
+    return new User(new UserName(from.name), { id: new UserId(from.id) });
   }
 
   private toDataModel(from: User): UserDataModel {

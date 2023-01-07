@@ -38,18 +38,12 @@ export class UserEmail {
 export class User {
   name: UserName;
   id: UserId;
-  email: UserEmail;
+  email?: UserEmail | null;
 
-  constructor(name: UserName, id?: UserId, email?: UserEmail) {
+  constructor(name: UserName, options?: { id?: UserId; email?: UserEmail }) {
     if (name == null) throw new Error("名前を入力してください");
-    if (id == null) {
-      this.id = new UserId(uuid());
-    } else {
-      this.id = id;
-    }
-    if (email != null) {
-      this.email = email;
-    }
+    this.id = options?.id || new UserId(uuid());
+    this.email = options?.email || null;
     this.name = name;
   }
 

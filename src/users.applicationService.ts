@@ -1,4 +1,5 @@
 import { User, UserEmail, UserId, UserName, UsersService } from "./user";
+import { UserUpdateCommand } from "./user.command";
 import { UserData } from "./userData.dto";
 import { UsersRepository } from "./users.repository";
 
@@ -6,8 +7,9 @@ export class UserApplicationService {
   private usersRepository: UsersRepository;
   private usersService: UsersService;
 
-  constructor(usersRepository: UsersRepository) {
+  constructor(usersRepository: UsersRepository, usersService: UsersService) {
     this.usersRepository = usersRepository;
+    this.usersService = usersService;
   }
 
   get(userId: string) {
@@ -25,16 +27,13 @@ export class UserApplicationService {
     this.usersRepository.save(user);
   }
 
-  update(
-    userId: string,
-    name: string | null = null,
-    email: string | null = null
-  ) {
-    const targetId = new UserId(userId);
+  update(command: UserUpdateCommand) {
+    const targetId = new UserId(command.id);
     const user = this.usersRepository.find(targetId);
 
     if (user == null) throw new Error("更新するユーザが見つかりません");
 
+    const name = command.name;
     if (name != null) {
       const newUserName = new UserName(name);
       user.changeUserName(newUserName);
@@ -43,6 +42,7 @@ export class UserApplicationService {
       }
     }
 
+    const email = command.email;
     if (email != null) {
       const newEmail = new UserEmail(email);
       user.changeUserEmail(newEmail);
