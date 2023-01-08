@@ -17,7 +17,6 @@ export class UsersRepository {
       const data = this.transfer(user, foundUser);
       updateUser(data);
     }
-    createUser(this.toDataModel(user));
   }
 
   public find(id: UserId): User | null {

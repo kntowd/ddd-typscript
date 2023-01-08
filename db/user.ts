@@ -3,7 +3,9 @@ export interface UserDataModel {
   name: string;
 }
 
-const users: { id: string; name: string }[] = [{ name: "jim", id: "id1" }];
+export const users: { id: string; name: string }[] = [
+  { name: "jim", id: "id1" },
+];
 
 export const createUser = (user: UserDataModel) => {
   users.push(user);

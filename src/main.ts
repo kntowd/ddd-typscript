@@ -1,14 +1,23 @@
-const { UserId } = require("./user");
-const { User } = require("./user");
+import { users } from "../db/user";
+import { UsersService } from "./user";
+import { UserDeleteCommand, UserRegisterCommand } from "./user.command";
+import { UserDeleteService } from "./userDeleteService";
+import { UserResisterService } from "./userResisterService";
+import { UsersRepository } from "./users.repository";
 
-const check = () => {
-  const user1Id = new UserId("user1Id");
-  const user1 = new User(user1Id, "kenta");
+const main = () => {
+  const repository = new UsersRepository();
+  const service = new UsersService(repository);
+  const userResisterService = new UserResisterService(repository, service);
+  const userDeleteService = new UserDeleteService(repository);
 
-  const user2Id = new UserId("user1Id");
-  const user2 = new User(user2Id, "kenta");
+  const userRegisterCommand = new UserRegisterCommand("kenta");
+  userResisterService.handle(userRegisterCommand);
 
-  console.log(user1.equals(user2));
+  const userDeleteCommand = new UserDeleteCommand("id1");
+  userDeleteService.handle(userDeleteCommand);
+
+  console.log(users);
 };
 
-check();
+main();
