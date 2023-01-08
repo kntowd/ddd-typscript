@@ -1,5 +1,5 @@
 import { User, UserEmail, UserId, UserName, UsersService } from "./user";
-import { UserUpdateCommand } from "./user.command";
+import { UserDeleteCommand, UserUpdateCommand } from "./user.command";
 import { UserData } from "./userData.dto";
 import { UsersRepository } from "./users.repository";
 
@@ -49,5 +49,14 @@ export class UserApplicationService {
     }
 
     this.usersRepository.save(user);
+  }
+
+  delete(command: UserDeleteCommand) {
+    const targetId = new UserId(command.id);
+    const user = this.usersRepository.find(targetId);
+
+    if (user == null) throw new Error("削除するユーザが見つかりません");
+
+    this.usersRepository.delete(user.id);
   }
 }

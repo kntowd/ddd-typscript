@@ -15,3 +15,11 @@ export class UserUpdateCommand {
     this.email = options?.email || null;
   }
 }
+
+export class UserDeleteCommand {
+  readonly id: string;
+
+  constructor(id: string) {
+    this.id = id;
+  }
+}

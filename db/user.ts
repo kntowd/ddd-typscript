@@ -25,3 +25,8 @@ export const updateUser = (user: UserDataModel) => {
 export const findUser = (id: string) => {
   return users.find((user) => user.id === id);
 };
+
+export const deleteUser = (id: string) => {
+  const index = users.findIndex((user) => (user.id = id));
+  users.splice(index, 1);
+};

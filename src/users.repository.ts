@@ -1,4 +1,10 @@
-import { createUser, findUser, updateUser, UserDataModel } from "../db/user";
+import {
+  createUser,
+  deleteUser,
+  findUser,
+  updateUser,
+  UserDataModel,
+} from "../db/user";
 import { User, UserId, UserName } from "./user";
 
 export class UsersRepository {
@@ -20,6 +26,10 @@ export class UsersRepository {
       return null;
     }
     return this.toModel(user);
+  }
+
+  public delete(id: UserId): void {
+    deleteUser(id.value);
   }
 
   private transfer(from: User, model: UserDataModel) {
