@@ -4,9 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@prisma/client": "4.8.1",
     "@types/lodash": "^4.14.191",
     "@types/uuid": "^9.0.0",
     "lodash": "^4.17.21",
+    "prisma": "4.8.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
