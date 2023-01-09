@@ -1,0 +1,13 @@
+services:
+  db:
+    image: mysql:8.0.31
+    container_name: db_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: ddd_database
+      MYSQL_USER: ddd_user
+      MYSQL_PASSWORD: ddd_password
+      TZ: "Asia/Tokyo"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - 3306:3306
