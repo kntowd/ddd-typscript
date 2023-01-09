@@ -11,12 +11,13 @@ export class UserResisterService {
     this.usersService = usersService;
   }
 
-  handle(command: UserRegisterCommand) {
+  async handle(command: UserRegisterCommand) {
     const userName = new UserName(command.name);
-
     const user = new User(userName);
 
-    if (this.usersService.exists(user)) {
+    const isExists = await this.usersService.exists(user);
+
+    if (isExists) {
       throw new Error("ユーザはすでに存在しています");
     }
 

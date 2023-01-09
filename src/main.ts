@@ -1,23 +1,18 @@
-import { users } from "../db/user";
+import { PrismaClient } from "@prisma/client";
 import { UsersService } from "./user";
-import { UserDeleteCommand, UserRegisterCommand } from "./user.command";
-import { UserDeleteService } from "./userDeleteService";
+import { UserRegisterCommand } from "./user.command";
 import { UserResisterService } from "./userResisterService";
 import { UsersRepository } from "./users.repository";
 
-const main = () => {
-  const repository = new UsersRepository();
+const main = async () => {
+  const dbClient = new PrismaClient();
+
+  const repository = new UsersRepository(dbClient);
   const service = new UsersService(repository);
   const userResisterService = new UserResisterService(repository, service);
-  const userDeleteService = new UserDeleteService(repository);
 
-  const userRegisterCommand = new UserRegisterCommand("kenta");
-  userResisterService.handle(userRegisterCommand);
-
-  const userDeleteCommand = new UserDeleteCommand("id1");
-  userDeleteService.handle(userDeleteCommand);
-
-  console.log(users);
+  const userRegisterCommand = new UserRegisterCommand("kenji");
+  await userResisterService.handle(userRegisterCommand);
 };
 
 main();

@@ -70,8 +70,8 @@ export class UsersService {
     this.usersRepository = usersRepository;
   }
 
-  public exists(user: User) {
-    const duplicatedUser = this.usersRepository.find(user.name);
+  public async exists(user: User) {
+    const duplicatedUser = await this.usersRepository.findByName(user.name);
     return duplicatedUser != null;
   }
 }

@@ -9,9 +9,9 @@ export class UserDeleteService {
     this.usersRepository = usersRepository;
   }
 
-  handle(command: UserDeleteCommand) {
+  async handle(command: UserDeleteCommand) {
     const userId = new UserId(command.id);
-    const user = this.usersRepository.find(userId);
+    const user = await this.usersRepository.find(userId);
 
     if (user == null) {
       throw new Error("ユーザが存在しません");
